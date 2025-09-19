@@ -1,0 +1,109 @@
+commands for text encryption and decryption
+
+1. Install cmake and dependencies
+bash
+sudo apt update
+sudo apt install -y cmake build-essential
+
+2. Re-run the build steps
+cd ~/liboqs/build
+
+Run cmake again:
+
+bash
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+
+3. Compile the library
+bash
+make -j$(nproc)
+
+4. Install the library
+bash
+sudo make install
+
+5. Install ninja
+Run:
+bash
+sudo apt update
+sudo apt install ninja-build -y
+
+6. Rebuild liboqs
+bash
+cd ~/liboqs   # or wherever you cloned it
+mkdir build && cd build
+cmake -GNinja ..
+ninja
+sudo ninja install
+
+Note: for this 6th command it is showing error. so try with below command
+
+
+Let’s clean this up and rebuild correctly:
+
+---
+
+### ✅ Correct Steps
+
+1. Go to your liboqs source folder:
+
+bash
+cd ~/liboqs
+
+
+2. If there’s already a broken build folder, remove it:
+
+bash
+rm -rf build
+
+
+3. Make a clean build folder:
+
+bash
+mkdir build && cd build
+
+
+4. Configure with cmake (this time inside liboqs/build):
+
+bash
+cmake -GNinja ..
+
+
+(Notice the .. here refers to the parent folder, which **does have CMakeLists.txt**.)
+
+5. Build:
+
+bash
+ninja
+
+
+6. Install:
+
+bash
+sudo ninja install
+
+
+---
+
+### 🔑 After this
+
+You should have oqs/oqs.h installed under /usr/local/include/oqs/ and the library under /usr/local/lib/.
+
+Then you can compile your test file:
+
+bash
+gcc kyber.c -L/usr/local/lib -loqs -lcrypto -lpthread -o test
+./test
+
+
+commands for image encryption and decryption
+cd ~/liboqs/build
+
+compile
+gcc main.c -L/usr/local/lib -loqs -lcrypto -lpthread -o kyber_image
+./kyber_image
+
+2. open decrypted image
+xdg-open images/decrypted.jpg
+
+
+
